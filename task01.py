@@ -1,3 +1,5 @@
+import random
+
 def find_max_min_brute_force(arr):
     """Brute Force
     we only count the number of comparisons of array elements
@@ -62,10 +64,14 @@ def find_max_min_dac(arr):
 
     return dac(0, len(arr) - 1)
 
+def generate_array(size=100_000, min_val=-1000, max_val=1000):
+    return [random.randint(min_val, max_val) for _ in range(size)]
+
 
 if __name__ == "__main__":
     # arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, -10, 25]
-    arr = [7, 3, 8, 2, 9, 1, 6, 4, 5, 10, -5, 12]
+    # arr = [7, 3, 8, 2, 9, 1, 6, 4, 5, 10, -5, 12]
+    arr = generate_array(size=50)
 
     print(f"Array with ({len(arr)} elements): {arr}\n")
 
