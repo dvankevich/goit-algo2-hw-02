@@ -1,6 +1,6 @@
 def find_max_min_brute_force(arr):
     """Brute Force
-        we only count the number of comparisons of array elements
+    we only count the number of comparisons of array elements
     """
     if not arr:
         return None, None, 0
@@ -23,31 +23,40 @@ def find_max_min_brute_force(arr):
 
 def find_max_min_dac(arr):
     """Divide and Conquer: return max, min, number_of_comparisons
-        we only count the number of comparisons of array elements
+    we only count the number of comparisons of array elements
     """
+    if not arr:
+        return None, None, 0
 
     def dac(low, high):
+        # 1 елемент: порівнянь немає
         if low == high:
             return arr[low], arr[low], 0
 
         if high == low + 1:
-            comparisons = 1  
-            if arr[low] > arr[high]:
-                return arr[low], arr[high], comparisons
+            if arr[low] > arr[high]:  # 1
+                return arr[low], arr[high], 1
             else:
-                return arr[high], arr[low], comparisons
+                return arr[high], arr[low], 1
 
         mid = (low + high) // 2
 
-        left_max, left_min, left_comp = dac(low, mid)
-        right_max, right_min, right_comp = dac(mid + 1, high)
+        left_max, left_min, left_cmp = dac(low, mid)
+        right_max, right_min, right_cmp = dac(mid + 1, high)
 
-        comparisons = left_comp + right_comp
-        comparisons += 1  
-        overall_max = left_max if left_max >= right_max else right_max
+        comparisons = left_cmp + right_cmp
 
-        comparisons += 1  
-        overall_min = left_min if left_min <= right_min else right_min
+        if left_max > right_max:  # +1
+            overall_max = left_max
+        else:
+            overall_max = right_max
+        comparisons += 1
+
+        if left_min < right_min:  # +1
+            overall_min = left_min
+        else:
+            overall_min = right_min
+        comparisons += 1
 
         return overall_max, overall_min, comparisons
 
