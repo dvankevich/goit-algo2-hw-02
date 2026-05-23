@@ -23,11 +23,7 @@ def optimize_printing(print_jobs: List[Dict], constraints: Dict) -> Dict:
     jobs = [PrintJob(**job) for job in print_jobs]
     limits = PrinterConstraints(**constraints)
 
-    print("unsorted jobs: ", jobs)
-
     jobs.sort(key=lambda x: x.priority)
-
-    print("sorted jobs: ", jobs)
 
     print_order = []
     total_time = 0
@@ -50,14 +46,10 @@ def optimize_printing(print_jobs: List[Dict], constraints: Dict) -> Dict:
             current_group = [job]
             current_volume = job.volume
 
-        print("current_group", current_group)
-        print("current_volume", current_volume)
-
     if current_group:
         total_time += max(j.print_time for j in current_group)
         print_order.extend(j.id for j in current_group)
 
-    
     return {"print_order": print_order, "total_time": total_time}
 
 
